@@ -30,12 +30,12 @@
             document.getElementById("form").appendChild(textLabel);
             document.getElementById("form").appendChild(textField);
             document.getElementById("form").appendChild(br);
-            inputValues.push(textField); // tambahkan setiap input ke dalam array
+            inputValues.push(textField); 
         }
         var makeNewButtonOk = document.createElement("button");
         makeNewButtonOk.innerHTML = "OK";
         makeNewButtonOk.onclick = function () {
-            sf(inputValues, name_field); // panggil sf dengan array input sebagai argumen
+            sf(inputValues, name_field); 
         };
         document.getElementById("form").appendChild(makeNewButtonOk);
     }
@@ -44,7 +44,7 @@
         event.preventDefault();
         var br = document.createElement("br");
         document.getElementById("form").appendChild(br);
-        var much_field = inputValues.length; // ambil panjang array sebagai jumlah opsi dropdown
+        var much_field = inputValues.length; 
         var selectField = document.createElement("select");
 
         for (var i = 0; i < much_field; i++) {
