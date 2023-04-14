@@ -1,32 +1,73 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <td>
-        <img src="D:\SEMESTER 3\IntAppProjects\DSC01123.jpg" width="100px"
-            style="display: block;border-radius: 50%;border-color:white;margin-right:30px" border="2px"></td>     
-	<h2>Inputkan Nama dan Jumlah Pilihan</h2>
-	<form>
-		<label for="nama">Nama:</label><br>
-		<input type="text" id="nama" name="nama"><br>
-		<label for="jumlah_pilihan">Jumlah Pilihan:</label><br>
-		<input type="number" id="jumlah_pilihan" name="jumlah_pilihan"><br><br>
-		<input type="button" value="OK" onclick="generateText()">
-	</form> 
-	<div id="text-input"></div>
-</head>
 <body>
-    <title>JavaScript</title>
-	<script>
-		function generateText() {
-			var jml = document.getElementById("jumlah_pilihan").value;
-			var textInput = "";
-			for (var i = 1; i <= jml; i++) {
-				textInput += "<label for='inputan" + i + "'>Pilihan " + i + ":</label><br>";
-				textInput += "<input type='text' id='inputan" + i + "' name='inputan" + i + "'><br>";
-			}
-			document.getElementById("text-input").innerHTML = textInput;
-		}
-	</script>
-	
+    <form id="form">
+        <label for="nama">Nama:</label><br>
+		<input type="text" id="nama" name="nama"><br>
+        <label for="jumlah_pilihan">Jumlah Pilihan:</label><br>
+		<input type="number" id="jumlah_pilihan" name="jumlah_pilihan"><br><br>
+        <button type="button" id="OK" onclick="generate_input_field()">OK</button>
+        <br>
+    </form>
 </body>
+<script>
+    function generate_input_field() {
+        var much_field = parseInt(document.getElementById("jumlah_pilihan").value);
+        var name_field = document.getElementById("nama").value
+        var inputValues = []; // tambahkan array untuk menyimpan inputan
+        document.getElementById("OK").disabled = true;
+        document.getElementById("jumlah_pilihan").disabled = true;
+        document.getElementById("nama").disabled = true;
+        for (var i = 0; i < much_field; i++) {
+            var br = document.createElement("br");
+            var textLabel = document.createElement("label");
+            var textField = document.createElement("input");
+            textField.type = "text";
+            textField.value = "";
+            textField.id = "textField" + (i + 1);
+            textLabel.innerHTML = "Pilihan " + (i + 1) + " : ";
+            document.getElementById("form").appendChild(br);
+            document.getElementById("form").appendChild(textLabel);
+            document.getElementById("form").appendChild(textField);
+            document.getElementById("form").appendChild(br);
+            inputValues.push(textField); // tambahkan setiap input ke dalam array
+        }
+        var makeNewButtonOk = document.createElement("button");
+        makeNewButtonOk.innerHTML = "OK";
+        makeNewButtonOk.onclick = function () {
+            sf(inputValues, name_field); // panggil sf dengan array input sebagai argumen
+        };
+        document.getElementById("form").appendChild(makeNewButtonOk);
+    }
+
+    function sf(inputValues, name_field) {
+        event.preventDefault();
+        var br = document.createElement("br");
+        document.getElementById("form").appendChild(br);
+        var much_field = inputValues.length; // ambil panjang array sebagai jumlah opsi dropdown
+        var selectField = document.createElement("select");
+
+        for (var i = 0; i < much_field; i++) {
+            var option = document.createElement("option");
+            document.getElementById("textField" + (i + 1)).disabled = true;
+            option.value = i + 1;
+            option.text = inputValues[i].previousSibling.textContent + " " + inputValues[i].value;
+            selectField.appendChild(option);
+        }
+        var makeNewButtonOk = document.createElement("button");
+        makeNewButtonOk.innerHTML = "OK";
+        makeNewButtonOk.onclick = function () {
+            var selectedOption = selectField.options[selectField.selectedIndex].text;
+            var values = [];
+            for (var i = 0; i < inputValues.length; i++) {
+                values.push(inputValues[i].value);
+            }
+            alert("Halowww gess nama aku " + name_field + " dan di sini ada " + inputValues.length + " pilihan yaitu {" + values.join(", ") + "} jadii akuu memilih " + selectedOption);
+        };
+
+        document.getElementById("form").appendChild(selectField);
+        document.getElementById("form").appendChild(makeNewButtonOk);
+    }
+</script>
+
 </html>
